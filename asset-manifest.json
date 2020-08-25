@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/mortgage-payments-visualizer.git/static/css/main.a60f43d8.chunk.css",
+    "main.js": "/mortgage-payments-visualizer.git/static/js/main.2dc7a9c5.chunk.js",
+    "main.js.map": "/mortgage-payments-visualizer.git/static/js/main.2dc7a9c5.chunk.js.map",
+    "runtime-main.js": "/mortgage-payments-visualizer.git/static/js/runtime-main.bccad71b.js",
+    "runtime-main.js.map": "/mortgage-payments-visualizer.git/static/js/runtime-main.bccad71b.js.map",
+    "static/js/2.91d7e012.chunk.js": "/mortgage-payments-visualizer.git/static/js/2.91d7e012.chunk.js",
+    "static/js/2.91d7e012.chunk.js.map": "/mortgage-payments-visualizer.git/static/js/2.91d7e012.chunk.js.map",
+    "index.html": "/mortgage-payments-visualizer.git/index.html",
+    "precache-manifest.d73b1b1451da72c39e31e5c57ca41c29.js": "/mortgage-payments-visualizer.git/precache-manifest.d73b1b1451da72c39e31e5c57ca41c29.js",
+    "service-worker.js": "/mortgage-payments-visualizer.git/service-worker.js",
+    "static/css/main.a60f43d8.chunk.css.map": "/mortgage-payments-visualizer.git/static/css/main.a60f43d8.chunk.css.map",
+    "static/js/2.91d7e012.chunk.js.LICENSE.txt": "/mortgage-payments-visualizer.git/static/js/2.91d7e012.chunk.js.LICENSE.txt",
+    "static/media/background.jpg": "/mortgage-payments-visualizer.git/static/media/background.0cba35c0.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bccad71b.js",
+    "static/js/2.91d7e012.chunk.js",
+    "static/css/main.a60f43d8.chunk.css",
+    "static/js/main.2dc7a9c5.chunk.js"
+  ]
+}
