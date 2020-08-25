@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import backgroundImg from './assets/background.jpeg';
+import backgroundImg from './assets/background.jpg';
 import FormContainer from './components/FormContainer'; 
 
 const Container = styled.div`

@@ -52,13 +52,17 @@ const InputSection = styled.div`
 
   label {
     text-transform: uppercase;
-    font-weight: 400;
-    color: grey;
+    /* font-weight: 400; */
+    font-weight: 700;
+    font-size: 1.5rem; 
+    /* color: grey; */
+    color: #000;
     margin-bottom: 0.5rem;
   }
 
   input {
-    background: rgba(255, 255, 255, 0.3);
+    /* background: rgba(255, 255, 255, 0.3); */
+    background: #fff; 
     height: 35px;
     border: none;
     border-radius: 10px;
