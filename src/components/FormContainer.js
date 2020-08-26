@@ -115,34 +115,8 @@ const FormContainer = () => {
     const [downPayment, setDownPayment] = useState('');
     const [loanTerm, setLoanTerm] = useState('');
     const [loanApr, setLoanApr] = useState('');
-    const [monthlyPayment, setMonthlyPayment] = useState(0.0)
+    const [monthlyPayment, setMonthlyPayment] = useState(0.0);
 
-
-    const loanAmortization = () => {
-       const totalPayments = loanTerm * 12;
-       const monthlyInterestRate = loanApr / 12;
-       let loanAmount = purchasePrice - downPayment;
-       let equity = purchasePrice - loanAmount; 
-
-       const equityBuild = [downPayment];
-       const monthlyInterestRecord = [];
-       const monthlyPrincipalRecord = [];
-       const monthlyLoanAmortization = [];
-
-       for (let i = 1; i <= totalPayments; i++) {
-          let monthlyInterestPayment = monthlyInterestRate * loanAmount;
-          loanAmount -= monthlyInterestPayment;
-          
-          let principal = monthlyPayment - monthlyInterestPayment;
-          monthlyPrincipalRecord.push(principal); 
-          equity += principal;
-          equityBuild.push(equity)
-
-          monthlyInterestRecord.push(monthlyInterestPayment);
-          monthlyLoanAmortization.push(loanAmount); 
-       }
-
-    }
 
     const submitCalculation = async (e) => {
         e.preventDefault();
@@ -156,21 +130,50 @@ const FormContainer = () => {
             validatedLoanTerm &&
             validatedLoanApr
         ) {
-            console.log('Form is fully validated');
+            // console.log('Form is fully validated');
             calculateValues();
+            // loanAmortization();
         }
     }
 
     const calculateValues = () => {
-        let principal = purchasePrice - downPayment;
-        let monthlyInterest = loanApr / 100 /12;
-        let numberOfPayments = loanTerm * 12;
-        let monthlyPrice = 
-            (principal * [monthlyInterest * (1 + monthlyInterest) ** numberOfPayments]) /
-            [(1 + monthlyInterest) ** numberOfPayments - 1];
-            setMonthlyPayment(monthlyPrice);
-            console.log(principal); 
+      let principal = purchasePrice - downPayment;
+      let monthlyInterest = loanApr / 100 / 12;
+      let numberOfPayments = loanTerm * 12;
+      let monthlyPrice =
+        (principal *
+          [monthlyInterest * (1 + monthlyInterest) ** numberOfPayments]) /
+        [(1 + monthlyInterest) ** numberOfPayments - 1];
+      setMonthlyPayment(monthlyPrice);
+   
+      let totalPayments = loanTerm * 12;
+       for (let i = 1; i <= totalPayments; i++) {
+         const monthlyInterestRecords = [];
+         const monthlyPrincipalRecords = [];
+         const equityBuild = [];
+         const monthlyPrincipalAmortization = [];
+
+         console.log(i);
+         console.log('Monthly Payment:', monthlyPrice.toFixed(2));
+         let monthlyInterestPayment = monthlyInterest * principal;
+         monthlyInterestRecords.push(monthlyInterestPayment.toFixed(2));
+         console.log("Monthly Interest Payment", monthlyInterestPayment.toFixed(2));
+
+         principal -= monthlyInterestPayment.toFixed(2);
+
+         let monthlyPrincipalPayment = monthlyPrice - monthlyInterestPayment;
+         monthlyPrincipalRecords.push(monthlyPrincipalPayment.toFixed(2));
+         console.log("Monthly Principal Payment", monthlyPrincipalPayment.toFixed(2));
+
+         console.log("Principal", principal.toFixed(2));
+         monthlyPrincipalAmortization.push(principal.toFixed(2));
+     
+        let equity = purchasePrice - principal;
+        equityBuild.push(equity.toFixed(2));
+        console.log('Equity', equity.toFixed(2)); 
+       }
     }
+
     const validateField = (field, setValue) => {
         let int = parseFloat(field);
         if (field === '' || field === 0) {
