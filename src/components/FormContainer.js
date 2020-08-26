@@ -159,11 +159,11 @@ const FormContainer = () => {
          monthlyInterestRecords.push(monthlyInterestPayment.toFixed(2));
          console.log("Monthly Interest Payment", monthlyInterestPayment.toFixed(2));
 
-         principal -= monthlyInterestPayment.toFixed(2);
-
          let monthlyPrincipalPayment = monthlyPrice - monthlyInterestPayment;
          monthlyPrincipalRecords.push(monthlyPrincipalPayment.toFixed(2));
          console.log("Monthly Principal Payment", monthlyPrincipalPayment.toFixed(2));
+
+           principal -= monthlyPrincipalPayment.toFixed(2);
 
          console.log("Principal", principal.toFixed(2));
          monthlyPrincipalAmortization.push(principal.toFixed(2));
