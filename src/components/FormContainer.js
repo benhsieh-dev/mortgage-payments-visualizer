@@ -115,7 +115,34 @@ const FormContainer = () => {
     const [downPayment, setDownPayment] = useState('');
     const [loanTerm, setLoanTerm] = useState('');
     const [loanApr, setLoanApr] = useState('');
-    const [monthlyPayments, setMonthlyPayments] = useState(0.0)
+    const [monthlyPayment, setMonthlyPayment] = useState(0.0)
+
+
+    const loanAmortization = () => {
+       const totalPayments = loanTerm * 12;
+       const monthlyInterestRate = loanApr / 12;
+       let loanAmount = purchasePrice - downPayment;
+       let equity = purchasePrice - loanAmount; 
+
+       const equityBuild = [downPayment];
+       const monthlyInterestRecord = [];
+       const monthlyPrincipalRecord = [];
+       const monthlyLoanAmortization = [];
+
+       for (let i = 1; i <= totalPayments; i++) {
+          let monthlyInterestPayment = monthlyInterestRate * loanAmount;
+          loanAmount -= monthlyInterestPayment;
+          
+          let principal = monthlyPayment - monthlyInterestPayment;
+          monthlyPrincipalRecord.push(principal); 
+          equity += principal;
+          equityBuild.push(equity)
+
+          monthlyInterestRecord.push(monthlyInterestPayment);
+          monthlyLoanAmortization.push(loanAmount); 
+       }
+
+    }
 
     const submitCalculation = async (e) => {
         e.preventDefault();
@@ -141,7 +168,7 @@ const FormContainer = () => {
         let monthlyPrice = 
             (principal * [monthlyInterest * (1 + monthlyInterest) ** numberOfPayments]) /
             [(1 + monthlyInterest) ** numberOfPayments - 1];
-            setMonthlyPayments(monthlyPrice);
+            setMonthlyPayment(monthlyPrice);
             console.log(principal); 
     }
     const validateField = (field, setValue) => {
@@ -192,7 +219,7 @@ const FormContainer = () => {
             </InputSection>
             <SubmitButton onClick={e => submitCalculation(e)}>Calculate</SubmitButton>
           </form>
-          <h3>Estimated Monthly Payments: {numeral(monthlyPayments).format('$0,0.00')} </h3>
+          <h3>Estimated Monthly Payments: {numeral(monthlyPayment).format('$0,0.00')} </h3>
         </Containner>
       </div>
     );
