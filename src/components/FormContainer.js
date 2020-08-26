@@ -204,7 +204,7 @@ const FormContainer = () => {
            {
              ...chartOptions,
              data: principalRecords,
-             label: "Monthyly Principal Amortization",
+             label: "Monthly Principal Amortization",
              borderColor: "#ff0000",
              backgroundColor: "#ff0000"
            },
