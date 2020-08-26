@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2'; 
+import { Bar } from 'react-chartjs-2'; 
 
 function LineChart({ data, labels }) {
   const initData = {
@@ -7,7 +7,7 @@ function LineChart({ data, labels }) {
     datasets: data,
   };
 
-  return <Line data={initData} />;
+  return <Bar data={initData} />;
 }
 
 export default LineChart; 
