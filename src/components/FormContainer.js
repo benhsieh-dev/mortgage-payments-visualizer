@@ -284,6 +284,12 @@ const FormContainer = () => {
         <br />
         <br />
         <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <div style={{ backgroundColor: "#fff", width: "100%", height: 900 }}>
           {chartData && <LineChart data={chartData} labels={monthsList} />}
         </div>
