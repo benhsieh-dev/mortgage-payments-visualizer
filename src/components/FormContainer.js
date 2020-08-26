@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import numeral from 'numeral';
-import LineChart from './LineChart';
+import Chart from './Chart';
 
 
 const Containner = styled.div`
@@ -53,10 +53,8 @@ const InputSection = styled.div`
 
   label {
     text-transform: uppercase;
-    /* font-weight: 400; */
     font-weight: 700;
     font-size: 1.5rem; 
-    /* color: grey; */
     color: #000;
     margin-bottom: 0.5rem;
   }
@@ -299,7 +297,7 @@ const FormContainer = () => {
         <br />
         <br />
         <div style={{ backgroundColor: "#fff", width: "100%", height: 900 }}>
-          {chartData && <LineChart data={chartData} labels={monthsList} />}
+          {chartData && <Chart data={chartData} labels={monthsList} />}
         </div>
       </div>
     );

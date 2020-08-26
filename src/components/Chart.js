@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2'; 
 
-function LineChart({ data, labels }) {
+function Chart({ data, labels }) {
   const initData = {
     labels,
     datasets: data,
@@ -10,4 +10,4 @@ function LineChart({ data, labels }) {
   return <Bar data={initData} />;
 }
 
-export default LineChart; 
+export default Chart; 
