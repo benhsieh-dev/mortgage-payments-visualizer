@@ -117,6 +117,11 @@ const FormContainer = () => {
     const [loanApr, setLoanApr] = useState('');
     const [monthlyPayment, setMonthlyPayment] = useState(0.0);
 
+    const [monthlyInterestRecords, setMonthlyInterestRecords] = useState([]);
+    const [monthlyPrincipalRecords, setMonthlyPrincipalRecords] = useState([]);
+    const [equityBuild, setEquityBuild]= useState([]);
+    const [monthlyPrincipalAmortization, setMonthlyPrincipalAmortization] = useState([]);
+
 
     const submitCalculation = async (e) => {
         e.preventDefault();
@@ -147,31 +152,32 @@ const FormContainer = () => {
       setMonthlyPayment(monthlyPrice);
    
       let totalPayments = loanTerm * 12;
+       const interestRecords = [];
+       const principalRecords = [];
+       const principalAmortization = [];
+       const equityRecords = [];
        for (let i = 1; i <= totalPayments; i++) {
-         const monthlyInterestRecords = [];
-         const monthlyPrincipalRecords = [];
-         const equityBuild = [];
-         const monthlyPrincipalAmortization = [];
-
-         console.log(i);
-         console.log('Monthly Payment:', monthlyPrice.toFixed(2));
          let monthlyInterestPayment = monthlyInterest * principal;
-         monthlyInterestRecords.push(monthlyInterestPayment.toFixed(2));
-         console.log("Monthly Interest Payment", monthlyInterestPayment.toFixed(2));
+         interestRecords.push(monthlyInterestPayment.toFixed(2));
 
          let monthlyPrincipalPayment = monthlyPrice - monthlyInterestPayment;
-         monthlyPrincipalRecords.push(monthlyPrincipalPayment.toFixed(2));
-         console.log("Monthly Principal Payment", monthlyPrincipalPayment.toFixed(2));
+         principalRecords.push(monthlyPrincipalPayment.toFixed(2));
 
-           principal -= monthlyPrincipalPayment.toFixed(2);
+         principal -= monthlyPrincipalPayment.toFixed(2);
 
-         console.log("Principal", principal.toFixed(2));
-         monthlyPrincipalAmortization.push(principal.toFixed(2));
+         principalAmortization.push(principal.toFixed(2));
      
         let equity = purchasePrice - principal;
-        equityBuild.push(equity.toFixed(2));
-        console.log('Equity', equity.toFixed(2)); 
+        equityRecords.push(equity.toFixed(2));
+        // console.log(equityRecords);
        }
+         setMonthlyInterestRecords(interestRecords);
+         setMonthlyPrincipalRecords(principalRecords);
+         setMonthlyPrincipalAmortization(principalAmortization);
+         setEquityBuild(equityRecords);
+
+         console.log(principalRecords); 
+         console.log(monthlyPrincipalRecords);  
     }
 
     const validateField = (field, setValue) => {
