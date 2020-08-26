@@ -197,28 +197,28 @@ const FormContainer = () => {
            {
              ...chartOptions,
              data: interestRecords,
-             label: "Interest Records",
+             label: "Monthly Interest",
              borderColor: "#ffcc00",
              backgroundColor: "#ffcc00",
            },
            {
              ...chartOptions,
              data: principalRecords,
-             label: "Principal Records",
+             label: "Monthyly Principal Amortization",
              borderColor: "#ff0000",
              backgroundColor: "#ff0000"
            },
            {
              ...chartOptions,
              data: principalAmortization,
-             label: "Principal Amortization",
+             label: "Total Principal Amortization",
              borderColor: "#000",
              backgroundColor: "#000",
            },
            {
              ...chartOptions,
              data: equityRecords,
-             label: "Equity Records",
+             label: "Equity Accumulation",
            },
          ];
         setChartData(data)
