@@ -138,10 +138,6 @@ const FormContainer = () => {
     const [loanApr, setLoanApr] = useState('');
     const [monthlyPayment, setMonthlyPayment] = useState(0.0);
 
-    // const [monthlyInterestRecords, setMonthlyInterestRecords] = useState([]);
-    // const [monthlyPrincipalRecords, setMonthlyPrincipalRecords] = useState([]);
-    // const [equityBuild, setEquityBuild]= useState([]);
-    // const [monthlyPrincipalAmortization, setMonthlyPrincipalAmortization] = useState([]);
     const [monthsList, setMonthsList] = useState([]);
     const [chartData, setChartData] = useState(null);
 
@@ -158,9 +154,7 @@ const FormContainer = () => {
             validatedLoanTerm &&
             validatedLoanApr
         ) {
-            // console.log('Form is fully validated');
             calculateValues();
-            // loanAmortization();
         }
     }
 
@@ -186,7 +180,6 @@ const FormContainer = () => {
          monthsCounter.push(i);
          let monthlyInterestPayment = monthlyInterest * principal;
          interestRecords.push(Number(monthlyInterestPayment.toFixed(2)));
-        //  console.log(interestRecords);
 
          let monthlyPrincipalPayment = monthlyPrice - monthlyInterestPayment;
          principalRecords.push(Number(monthlyPrincipalPayment.toFixed(2)));
@@ -197,10 +190,8 @@ const FormContainer = () => {
      
         let equity = purchasePrice - principal;
         equityRecords.push(Number(equity.toFixed(2)));
-        // console.log(equityRecords);
        }
-        //  setMonthlyInterestRecords(Interest Records);
-        //  setMonthlyPrincipalRecords(principalRecords);
+
          
          let data = [
            {
@@ -229,31 +220,6 @@ const FormContainer = () => {
          ];
         setChartData(data)
         setMonthsList(monthsCounter);
-        
-        //  console.log(principalRecords);
-        // setMonthlyInterestRecords(
-        //        monthlyInterestRecords.concat(interestRecords)
-        //      );
-        //  setMonthlyPrincipalRecords(principalRecords);
-        //  setMonthlyPrincipalAmortization(principalAmortization);
-        //  setEquityBuild(equityRecords);
-
-        //  console.log(principalRecords); 
-        //  console.log(monthsCounter);
-        // let totalMonthlyInterest = 0
-        // let totalPrincipalRecords = 0;
-        // let totalPrincipalAmortization = 0;
-        // let totalEquityRecords = 0;
-        // interestRecords.map((item) => (totalMonthlyInterest += Number(item)));
-        // principalRecords.map((item) => (totalPrincipalRecords += Number(item)));
-        // principalAmortization.map(
-        //   (item) => (totalPrincipalAmortization += Number(item))
-        // );
-        // equityRecords.map((item) => (totalEquityRecords += Number(item)));
-        //  console.log("monthlyInterestRecords", totalMonthlyInterest);
-        //  console.log("totalPrincipalRecords",totalPrincipalRecords);
-        //  console.log("totalPrincipalAmortization", totalPrincipalAmortization);
-        //  console.log("totalEquityRecords", totalEquityRecords);
     }
 
     const validateField = (field, setValue) => {
@@ -312,7 +278,13 @@ const FormContainer = () => {
             {numeral(monthlyPayment).format("$0,0.00")}{" "}
           </h3>
         </Containner>
-        <div style={{ backgroundColor: "#fff", width: "100%", height: 320 }}>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div style={{ backgroundColor: "#fff", width: "100%", height: 900 }}>
           {chartData && <LineChart data={chartData} labels={monthsList} />}
         </div>
       </div>
