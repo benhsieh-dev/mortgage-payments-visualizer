@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import numeral from 'numeral';
+import LineChart from './LineChart';
 
 
 const Containner = styled.div`
@@ -110,6 +111,26 @@ const Error = styled.h4`
     margin-bottom: 1rem; 
     `;
 
+const chartOptions = {
+  fill: false,
+  lineTension: 0.1,
+  backgroundColor: "rgba(75,192,192,0.4)",
+  borderColor: "rgba(75,192,192,1)",
+  borderCapStyle: "butt",
+  borderDash: [],
+  borderDashOffset: 0.0,
+  borderJoinStyle: "miter",
+  pointBorderColor: "rgba(75,192,192,1)",
+  pointBackgroundColor: "#fff",
+  pointBorderWidth: 1,
+  pointHoverRadius: 5,
+  pointHoverBackgroundColor: "rgba(75,192,192,1)",
+  pointHoverBorderColor: "rgba(220,220,220,1)",
+  pointHoverBorderWidth: 2,
+  pointRadius: 1,
+  pointHitRadius: 10,
+};
+
 const FormContainer = () => {
     const [purchasePrice, setPurchasePrice] = useState('');
     const [downPayment, setDownPayment] = useState('');
@@ -117,10 +138,12 @@ const FormContainer = () => {
     const [loanApr, setLoanApr] = useState('');
     const [monthlyPayment, setMonthlyPayment] = useState(0.0);
 
-    const [monthlyInterestRecords, setMonthlyInterestRecords] = useState([]);
-    const [monthlyPrincipalRecords, setMonthlyPrincipalRecords] = useState([]);
-    const [equityBuild, setEquityBuild]= useState([]);
-    const [monthlyPrincipalAmortization, setMonthlyPrincipalAmortization] = useState([]);
+    // const [monthlyInterestRecords, setMonthlyInterestRecords] = useState([]);
+    // const [monthlyPrincipalRecords, setMonthlyPrincipalRecords] = useState([]);
+    // const [equityBuild, setEquityBuild]= useState([]);
+    // const [monthlyPrincipalAmortization, setMonthlyPrincipalAmortization] = useState([]);
+    const [monthsList, setMonthsList] = useState([]);
+    const [chartData, setChartData] = useState(null);
 
 
     const submitCalculation = async (e) => {
@@ -152,32 +175,85 @@ const FormContainer = () => {
       setMonthlyPayment(monthlyPrice);
    
       let totalPayments = loanTerm * 12;
-       const interestRecords = [];
-       const principalRecords = [];
-       const principalAmortization = [];
-       const equityRecords = [];
+       let interestRecords = [];
+       let principalRecords = [];
+       let principalAmortization = [];
+       let equityRecords = [];
+
+       let monthsCounter = [];
+
        for (let i = 1; i <= totalPayments; i++) {
+         monthsCounter.push(i);
          let monthlyInterestPayment = monthlyInterest * principal;
-         interestRecords.push(monthlyInterestPayment.toFixed(2));
+         interestRecords.push(Number(monthlyInterestPayment.toFixed(2)));
+        //  console.log(interestRecords);
 
          let monthlyPrincipalPayment = monthlyPrice - monthlyInterestPayment;
-         principalRecords.push(monthlyPrincipalPayment.toFixed(2));
+         principalRecords.push(Number(monthlyPrincipalPayment.toFixed(2)));
 
          principal -= monthlyPrincipalPayment.toFixed(2);
 
-         principalAmortization.push(principal.toFixed(2));
+         principalAmortization.push(Number(principal.toFixed(2)));
      
         let equity = purchasePrice - principal;
-        equityRecords.push(equity.toFixed(2));
+        equityRecords.push(Number(equity.toFixed(2)));
         // console.log(equityRecords);
        }
-         setMonthlyInterestRecords(interestRecords);
-         setMonthlyPrincipalRecords(principalRecords);
-         setMonthlyPrincipalAmortization(principalAmortization);
-         setEquityBuild(equityRecords);
+        //  setMonthlyInterestRecords(Interest Records);
+        //  setMonthlyPrincipalRecords(principalRecords);
+         
+         let data = [
+           {
+             ...chartOptions,
+             data: interestRecords,
+             label: "Interest Records",
+             borderColor: "#ffcc00",
+           },
+           {
+             ...chartOptions,
+             data: principalRecords,
+             label: "Principal Records",
+             borderColor: "#ff0000",
+           },
+           {
+             ...chartOptions,
+             data: principalAmortization,
+             label: "Principal Amortization",
+             borderColor: "#000",
+           },
+           {
+             ...chartOptions,
+             data: equityRecords,
+             label: "Equity Records",
+           },
+         ];
+        setChartData(data)
+        setMonthsList(monthsCounter);
+        
+        //  console.log(principalRecords);
+        // setMonthlyInterestRecords(
+        //        monthlyInterestRecords.concat(interestRecords)
+        //      );
+        //  setMonthlyPrincipalRecords(principalRecords);
+        //  setMonthlyPrincipalAmortization(principalAmortization);
+        //  setEquityBuild(equityRecords);
 
-         console.log(principalRecords); 
-         console.log(monthlyPrincipalRecords);  
+        //  console.log(principalRecords); 
+        //  console.log(monthsCounter);
+        // let totalMonthlyInterest = 0
+        // let totalPrincipalRecords = 0;
+        // let totalPrincipalAmortization = 0;
+        // let totalEquityRecords = 0;
+        // interestRecords.map((item) => (totalMonthlyInterest += Number(item)));
+        // principalRecords.map((item) => (totalPrincipalRecords += Number(item)));
+        // principalAmortization.map(
+        //   (item) => (totalPrincipalAmortization += Number(item))
+        // );
+        // equityRecords.map((item) => (totalEquityRecords += Number(item)));
+        //  console.log("monthlyInterestRecords", totalMonthlyInterest);
+        //  console.log("totalPrincipalRecords",totalPrincipalRecords);
+        //  console.log("totalPrincipalAmortization", totalPrincipalAmortization);
+        //  console.log("totalEquityRecords", totalEquityRecords);
     }
 
     const validateField = (field, setValue) => {
@@ -201,35 +277,44 @@ const FormContainer = () => {
             <InputSection>
               <label>Purchase Price</label>
               <Error>{purchasePrice.error}</Error>
-              <input 
-                onChange={e => setPurchasePrice(e.target.value)}
-                type="text" />
+              <input
+                onChange={(e) => setPurchasePrice(e.target.value)}
+                type="text"
+              />
             </InputSection>
             <InputSection>
               <label>Down Payment</label>
               <Error>{downPayment.error}</Error>
-              <input 
-                onChange={e => setDownPayment(e.target.value)}
-                type="text" />
+              <input
+                onChange={(e) => setDownPayment(e.target.value)}
+                type="text"
+              />
             </InputSection>
             <InputSection>
               <label>Loan Term (Years)</label>
               <Error>{loanTerm.error}</Error>
-              <input 
-                onChange={e => setLoanTerm(e.target.value)}
-                type="text" />
+              <input
+                onChange={(e) => setLoanTerm(e.target.value)}
+                type="text"
+              />
             </InputSection>
             <InputSection>
               <label>APR (%)</label>
               <Error>{loanApr.error}</Error>
-              <input 
-                onChange={e => setLoanApr(e.target.value)}
-                type="text" />
+              <input onChange={(e) => setLoanApr(e.target.value)} type="text" />
             </InputSection>
-            <SubmitButton onClick={e => submitCalculation(e)}>Calculate</SubmitButton>
+            <SubmitButton onClick={(e) => submitCalculation(e)}>
+              Calculate
+            </SubmitButton>
           </form>
-          <h3>Estimated Monthly Payments: {numeral(monthlyPayment).format('$0,0.00')} </h3>
+          <h3>
+            Estimated Monthly Payments:{" "}
+            {numeral(monthlyPayment).format("$0,0.00")}{" "}
+          </h3>
         </Containner>
+        <div style={{ backgroundColor: "#fff", width: "100%", height: 320 }}>
+          {chartData && <LineChart data={chartData} labels={monthsList} />}
+        </div>
       </div>
     );
 }
